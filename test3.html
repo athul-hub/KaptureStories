@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://unpkg.com/swiper@8.4.5/swiper-bundle.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #111;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .swiper-container {
+            width: 100%;
+            height: 80vh;
+            padding: 50px 0;
+        }
+
+        .swiper-slide {
+            width: 70%;
+            height: 100%;
+            opacity: 0.5 !important;
+            transform: scale(0.85);
+            transition: all 0.4s ease;
+            border-radius: 15px;
+            overflow: hidden;
+            filter: brightness(0.7);
+        }
+
+        .swiper-slide-active {
+            opacity: 1 !important;
+            transform: scale(1);
+            filter: brightness(1);
+            z-index: 2 !important;
+        }
+
+        .video-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-top: 56.25%;
+        }
+
+        .video-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .video-poster {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+            z-index: 2;
+            transition: opacity 0.3s ease;
+        }
+
+        .video-poster:hover {
+            opacity: 0.9;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80px;
+            height: 80px;
+            cursor: pointer;
+            z-index: 3;
+            opacity: 0.8;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .swiper-button-prev,
+        .swiper-button-next {
+            color: white !important;
+            width: 40px !important;
+            height: 40px !important;
+            background: rgba(0,0,0,0.5);
+            border-radius: 50%;
+            backdrop-filter: blur(5px);
+        }
+
+        .slide-caption {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            text-align: center;
+            background: rgba(0,0,0,0.7);
+            padding: 8px 20px;
+            border-radius: 20px;
+            z-index: 4;
+            max-width: 90%;
+        }
+    </style>
+</head>
+<body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide">
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe class="video-iframe" 
+                                data-src="https://www.youtube.com/embed/gck3vkIShOw?enablejsapi=1&mute=1&loop=1&playlist=gck3vkIShOw" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                        <div class="video-poster" style="background-image: url(https://img.youtube.com/vi/gck3vkIShOw/maxresdefault.jpg);">
+                            <svg class="play-button" viewBox="0 0 100 100">
+                                <path fill="#fff" d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="slide-caption">luke james - who you are [Official Audio]</div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="swiper-slide">
+                <div class="video-container">
+                    <div class="video-wrapper">
+                        <iframe class="video-iframe" 
+                                data-src="https://www.youtube.com/embed/2BJBFr4-JpA?enablejsapi=1&mute=1&loop=1&playlist=2BJBFr4-JpA" 
+                                frameborder="0" 
+                                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                                allowfullscreen></iframe>
+                        <div class="video-poster" style="background-image: url(https://img.youtube.com/vi/2BJBFr4-JpA/maxresdefault.jpg);">
+                            <svg class="play-button" viewBox="0 0 100 100">
+                                <path fill="#fff" d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="slide-caption">luke james - shine on [Official Audio]</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/swiper@8.4.5/swiper-bundle.min.js"></script>
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+    let players = [];
+    
+    $(document).ready(function() {
+        // Initialize Swiper with fixed parameters
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,
+            speed: 600,
+            slidesPerView: 'auto',
+            centeredSlides: true,
+            spaceBetween: 30,
+            effect: 'coverflow',
+            coverflowEffect: {
+                rotate: 0,
+                stretch: 0,
+                depth: 100,
+                modifier: 2,
+                slideShadows: false
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev"
+            },
+            on: {
+                init: function() {
+                    initYouTubePlayers();
+                    this.slides[this.activeIndex].classList.add('swiper-slide-active');
+                },
+                slideChangeTransitionEnd: function() {
+                    pauseAllVideos();
+                    const activeSlide = this.slides[this.activeIndex];
+                    const player = $(activeSlide).data('ytPlayer');
+                    if(player) {
+                        player.playVideo();
+                        $(activeSlide).find('.video-poster').hide();
+                    }
+                }
+            }
+        });
+
+        // YouTube Player Initialization
+        function initYouTubePlayers() {
+            $('.video-iframe').each(function(index) {
+                const iframe = this;
+                const videoId = $(this).data('src').split('/embed/')[1].split('?')[0];
+                
+                players[index] = new YT.Player(iframe, {
+                    videoId: videoId,
+                    playerVars: {
+                        autoplay: 0,
+                        mute: 1,
+                        loop: 1,
+                        playlist: videoId,
+                        controls: 1,
+                        modestbranding: 1
+                    },
+                    events: {
+                        'onReady': (event) => onPlayerReady(event, index),
+                        'onStateChange': onPlayerStateChange
+                    }
+                });
+                
+                $(this).closest('.swiper-slide').data('ytPlayer', players[index]);
+            });
+        }
+
+        function onPlayerReady(event, index) {
+            // Autoplay first video
+            if(index === 0) {
+                event.target.playVideo();
+                $(event.target.getIframe()).closest('.swiper-slide').find('.video-poster').hide();
+            }
+        }
+
+        function onPlayerStateChange(event) {
+            if (event.data === YT.PlayerState.ENDED) {
+                event.target.playVideo();
+            }
+        }
+
+        // Click handler for poster
+        $('.video-poster').click(function() {
+            const slide = $(this).closest('.swiper-slide');
+            const player = slide.data('ytPlayer');
+            if(player) {
+                player.unMute();
+                player.playVideo();
+                $(this).hide();
+            }
+        });
+
+        // Pause all videos
+        function pauseAllVideos() {
+            players.forEach(player => {
+                if(player && player.pauseVideo) {
+                    player.pauseVideo();
+                    $(player.getIframe()).closest('.swiper-slide').find('.video-poster').show();
+                }
+            });
+        }
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Welcome Animation</title>
+  <link rel="preload" href="logo/logo1.png" as="image">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body.loading {
+      overflow: hidden;
+    }
+
+    .welcome-screen {
+      position: fixed;
+      z-index: 9999;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000;
+      display:inline-block ;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 1s ease-out;
+    }
+
+    .welcome-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      animation: fadeInTogether 1.8s ease-out forwards;
+    }
+
+    .welcome-logo {
+      width: 60vw;
+      height: 60vh; /* Fixed height to prevent layout shift */
+      object-fit: contain; /* Ensure logo maintains aspect ratio */
+      margin-bottom: 10px; /* Reduced space below the logo */
+    }
+
+    .welcome-text {
+      font-size: 159%;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      margin-top: 0; /* Removes default margin */
+    }
+
+    @keyframes fadeInTogether {
+      0% {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+</head>
+<body class="loading">
+
+  <!-- Welcome Screen -->
+  <div class="welcome-screen" id="welcome-screen">
+    <div class="welcome-inner">
+      <img src="logo/logo1.png" 
+           alt="Logo" 
+           class="welcome-logo">
+      <h1 class="welcome-text">Kapture.Stories</h1>
+    </div>
+  </div>
+
+  <!-- Main Website Content -->
+  <div>
+    <p>Your full website content goes here...</p>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const screen = document.getElementById('welcome-screen');
+      const inner = document.querySelector('.welcome-inner');
+
+      // Force reflow to trigger animation properly
+      void inner.offsetHeight;
+
+      inner.style.animation = 'fadeInTogether 1.8s ease-out forwards';
+
+      inner.addEventListener('animationend', () => {
+        screen.style.opacity = '0';
+        document.body.classList.remove('loading');
+        setTimeout(() => {
+          screen.style.display = 'none';
+        }, 1000);
+      });
+    });
+  </script>
+
+</body>
+</html>
